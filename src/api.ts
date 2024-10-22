@@ -23,17 +23,7 @@ export async function signIn(user: string, password: string) {
     credentials: "include",
   });
   const data = await response.json();
-  console.log(data, "datam");
-  return {
-    status: "success",
-    user: {
-      name: data.firstName,
-      accessToken: data?.accessToken,
-      email: data?.email,
-      gender: data?.gender,
-      image: data?.image,
-    },
-  };
+  return { status: "success", user: data };
 }
 
 let items = [

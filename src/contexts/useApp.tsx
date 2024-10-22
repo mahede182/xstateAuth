@@ -20,18 +20,10 @@ export const appMachine = setup({
       | { type: "START_APP" }
       | {
           type: "SIGN_IN";
-          username: string;
-          accessToken: string;
-          email: string;
-          gender: string;
-          image: string;
+          user: any | null;
         },
     context: {} as {
-      username: string;
-      accessToken: string;
-      email: string;
-      gender: string;
-      image: string;
+      user: any | null;
       refAuthenticating: AuthenticatingMachineActor | null;
       refAuthenticated: AuthenticatedMachineActor | null;
       refNotificationCenter: NotificationCenterMachineActor | undefined;
@@ -60,11 +52,7 @@ export const appMachine = setup({
       },
     }),
     setUserInfo: assign({
-      username: (_, event) => event?.username,
-      accessToken: (_, event) => event?.accessToken,
-      email: (_, event) => event?.email,
-      gender: (_, event) => event?.gender,
-      image: (_, event) => event?.image,
+      user: (_, event) => event.user,
     }),
   },
   actors: {
@@ -76,7 +64,7 @@ export const appMachine = setup({
   id: "application",
   initial: "initializing",
   context: {
-    username: "",
+    user: null,
     refAuthenticating: null,
     refAuthenticated: null,
     refNotificationCenter: undefined,
@@ -93,10 +81,8 @@ export const appMachine = setup({
           actions: [
             {
               type: "setUserInfo",
-              params: ({
-                event: { username, accessToken, email, gender, image },
-              }) => {
-                return { username, accessToken, email, gender, image };
+              params: ({ event: { user } }) => {
+                return { user };
               },
             },
           ],

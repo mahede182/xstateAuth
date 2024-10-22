@@ -44,7 +44,6 @@ export default React.memo(function SignIn({ onSignInPress, isLoading }: Props) {
         mode="contained"
         loading={isLoading}
         onPress={() => {
-          Alert.alert(`email: ${user} pass: ${password}`);
           onSignInPress(user, password);
         }}
       >

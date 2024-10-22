@@ -13,12 +13,13 @@ interface Props extends AuthenticatedScreenProps<"Home"> {
 
 export default React.memo(function Home({ navigation, actorRef }: Props) {
   const { state: appState } = useApp();
-  const { email, accessToken, image, gender, username } = appState?.context;
+  const { email, accessToken, image, gender } = appState?.context?.user;
   const state = useSelector(actorRef, (snapshot) => snapshot);
   console.log(appState?.context);
 
   return (
     <View style={{ padding: 16 }}>
+      <Button onPress={() => navigation.goBack()}>Back</Button>
       <Text variant="headlineSmall" style={{ marginBottom: 8 }}>
         Welcome, {appState.context.username}
       </Text>

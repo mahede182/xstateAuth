@@ -18,44 +18,16 @@ export const authenticatingMachine = setup({
     signIn: fromPromise(async ({ input }) => {
       const { user, password } = input;
       const result = await signIn(user, password);
-      return result as {
-        status: string;
-        user: {
-          name: string;
-          accessToken: string;
-          email: string;
-          gender: string;
-          image: string;
-        };
-      };
+      return result;
     }),
   },
   actions: {
-    sendParentSignIn: sendParent(
-      (
-        _,
-        {
-          user: { name, accessToken, email, gender, image },
-        }: {
-          user: {
-            name: string;
-            accessToken: string;
-            email: string;
-            gender: string;
-            image: string;
-          };
-        },
-      ) => {
-        return {
-          type: "SIGN_IN",
-          username: name,
-          accessToken,
-          email,
-          gender,
-          image,
-        };
-      },
-    ),
+    sendParentSignIn: sendParent((_, { user }) => {
+      return {
+        type: "SIGN_IN",
+        user,
+      };
+    }),
   },
 }).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QEMCuAXAFmAduglgMbIE5QB0+EANmAMQDKAkgOIByA+k2wNoAMAXUSgADgHtY+AmJzCQAD0QBGAEwBWcgDYALGoAcKgOzaVezXz6GlAGhABPZWfJ69SvnoCcFjx72HDmgC+gbZoWLgExKQUklA4+GRMOHQQMmCUOABuYgDW6WHYeEQkCTH4caVJCAnZUfgy-AKNcuKS0rJICogq2trkSppKvWpqAMyjhu7atg4IruSjKioeSh4q5qNDSmrBISA4YhBwcgURxdEtElL1HaCKCAC0mjOIT8GhGIWRJWSUNGCXNo3OT3EwvBBKPzkPgmNTaRbaQweTQTFTvECnIp1X6xeKJW4gVrXGQg7raPRaPjbXQDXqIlzgpSGCmaPxqLaGcZWDyGXaBIA */
